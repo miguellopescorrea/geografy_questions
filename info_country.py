@@ -84,8 +84,8 @@ class InfoCountryApp:
         tk.Button(self.root, text="Responder", font=("Helvetica", 14), command=self.verificar_resposta).pack(pady=10)
 
     def verificar_resposta(self):
-        resposta = self.resposta.get().strip().lower()
-        pais_correto = self.paises_embaralhados[self.pergunta_atual]["nome"].lower()
+        resposta = self.resposta.get().strip().lower().upper()
+        pais_correto = self.paises_embaralhados[self.pergunta_atual]["nome"].lower().upper()
 
         if resposta == pais_correto:
             self.pontuacao += 1
@@ -109,6 +109,7 @@ class InfoCountryApp:
             info = f"🌍 {pais['nome']}\n{pais['info']}\n"
             tk.Label(self.root, text=info, font=("Helvetica", 12), justify="left").pack(pady=5)
         tk.Button(self.root, text="⬅️ Voltar", font=("Helvetica", 14), command=self.tela_inicial).pack(pady=10)
+      
 
 
 if __name__ == "__main__":
