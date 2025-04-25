@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import *
 from tkinter import messagebox
 from PIL import Image, ImageTk
 import random
@@ -105,12 +106,32 @@ class InfoCountryApp:
     def mostrar_infos(self):
         self.limpar_tela()
         tk.Label(self.root, text="📘 Informações dos Países", font=("Helvetica", 18)).pack(pady=10)
+
+        container = tk.Frame(self.root)
+        container.pack(fill="both", expand=True)
+
+        canvas = tk.Canvas(container)
+        scrollbar = tk.Scrollbar(container, orient="vertical", command=canvas.yview)
+        scrollable_frame = tk.Frame(canvas)
+
+        scrollable_frame.bind(
+            "<Configure>",
+            lambda e: canvas.configure(
+                scrollregion=canvas.bbox("all")
+            )
+        )
+
+        canvas.create_window((0, 0), window=scrollable_frame, anchor="nw")
+        canvas.configure(yscrollcommand=scrollbar.set)
+
+        canvas.pack(side="left", fill="both", expand=True)
+        scrollbar.pack(side="right", fill="y")
+
         for pais in paises:
             info = f"🌍 {pais['nome']}\n{pais['info']}\n"
-            tk.Label(self.root, text=info, font=("Helvetica", 12), justify="left").pack(pady=5)
+            tk.Label(scrollable_frame, text=info, font=("Helvetica", 12), justify="left", anchor="w").pack(pady=5, anchor="w")
+        
         tk.Button(self.root, text="⬅️ Voltar", font=("Helvetica", 14), command=self.tela_inicial).pack(pady=10)
-      
-
 
 if __name__ == "__main__":
    
